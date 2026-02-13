@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>GNDEC Student Registration</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Guru Nanak Dev Engineering College</h1>
+      <p class="subtitle">Student Registration Form</p>
+    </header>
+
+    <form id="regForm">
+      <div class="row">
+        <label>Name <input type="text" id="name" name="name" required></label>
+        <label>USN <input type="text" id="usn" name="usn" required></label>
+      </div>
+
+      <div class="row">
+        <label>Semester
+          <select id="semester" name="semester" required>
+            <option value="" disabled selected>Select</option>
+            <option>1</option><option>2</option><option>3</option><option>4</option>
+            <option>5</option><option>6</option><option>7</option><option>8</option>
+          </select>
+        </label>
+
+        <label>Branch
+          <select id="branch" name="branch" required>
+            <option value="" disabled selected>Select</option>
+            <option>Computer Science</option>
+            <option>Electronics</option>
+            <option>Mechanical</option>
+            <option>Civil</option>
+            <option>IT</option>
+            <!-- add branches as needed -->
+          </select>
+        </label>
+      </div>
+
+      <div class="row">
+        <label>Email <input type="email" id="email" name="email" required></label>
+        <label>Gender
+          <select id="gender" name="gender" required>
+            <option value="" disabled selected>Select</option>
+            <option>Male</option><option>Female</option><option>Other</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="row">
+        <label>Overall CGPA <input type="number" step="0.01" id="overallcgpa" name="overallcgpa" min="0" max="10" required></label>
+        <label>No. of Backlogs <input type="number" id="backlogs" name="backlogs" min="0" value="0"></label>
+      </div>
+
+      <div class="actions">
+        <button type="submit">Register</button>
+        <button type="button" id="viewBtn">View Registered</button>
+      </div>
+
+      <div id="message" class="message"></div>
+    </form>
+
+    <section id="listSection" class="list hidden">
+      <h2>Registered Students</h2>
+      <table id="studentsTable">
+        <thead><tr><th>Name</th><th>USN</th><th>Branch</th><th>Sem</th><th>CGPA</th><th>Backlogs</th><th>Registered</th></tr></thead>
+        <tbody></tbody>
+      </table>
+      <button id="closeList">Close</button>
+    </section>
+  </div>
+
+
+
+  <h3>Delete Student</h3>
+<input type="text" id="deleteUSN" placeholder="Enter USN to delete">
+<button onclick="deleteStudent()">Delete</button>
+
+<p id="deleteMessage"></p>
+
+<script>
+  async function deleteStudent() {
+    const usn = document.getElementById("deleteUSN").value;
+    const response = await fetch(`/delete/${usn}`, { method: "DELETE" });
+    const result = await response.json();
+    document.getElementById("deleteMessage").textContent = result.message;
+  }
+</script>
+
+
+
+  <script src="app.js"></script>
+</body>
+</html>
